@@ -1,0 +1,36 @@
+{{#each erros}}
+  <div class="alert alert-danger">{{texto}}</div>
+{{/each}}
+<div class="card">
+  <div class="card-header">
+    <h1 class="display-4" style="font-size:30px;">Editar categoria</h1>
+  </div>
+  <div class="card-body">
+    <form action="/admin/categorias/update" method="POST">
+      <div class="mt-2">
+        <label for="nome">Nome</label>
+        <input
+          type="text"
+          value="{{nome}}"
+          class="form-control"
+          id="nome"
+          name="nome"
+        />
+        <input type="hidden" value="{{_id}}" name="_id" />
+      </div>
+      <div class="mt-2">
+        <label for="slug">Slug</label>
+        <input
+          type="text"
+          value="{{slug}}"
+          class="form-control"
+          id="slug"
+          name="slug"
+        />
+      </div>
+      <div class="mt-4">
+        <button class="btn btn-success" type="submit">Editar categoria</button>
+      </div>
+    </form>
+  </div>
+</div>

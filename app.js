@@ -4,6 +4,26 @@ const bodyParser = require("body-parser");
 const admin = require("./routes/admin");
 const app = express();
 const path = require("path");
+const session = require("express-session");
+const flash = require("connect-flash");
+
+// Configurando as sessoes
+app.use(
+  session({
+    secret: "franciscofetapi",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+app.use(flash());
+
+// Middlewares
+
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error_msg = req.flash("error_msg");
+  next();
+});
 
 // Configurando o body-parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -18,7 +38,10 @@ app.use(express.static(path.join(__dirname, "public")));
 const PORT = 3000;
 
 // Rotas
-
+app.use((req, res, next) => {
+  console.log("Eu sou o middlware");
+  next();
+});
 app.use("/admin", admin);
 
 app.listen(PORT, () => {
