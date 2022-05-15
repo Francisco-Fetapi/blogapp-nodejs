@@ -1,34 +1,38 @@
 <h1>Lista de postagens</h1>
-
 <hr />
 
 <a href="/admin/postagens/add">
   <button class="btn btn-success">Nova Postagem</button>
 </a>
 <div class="my-3">
-  {{!-- {{#each categorias}}
+  {{#each postagens}}
     <div class="card my-2">
       <div class="card-header">
         <h1 class="display-4" style="font-size:20px;">
-          {{nome}}
+          {{titulo}}
         </h1>
       </div>
       <div class="card-body">
         <p>SLUG: <b><small>{{slug}}</small></b></p>
-        <p style="text-align: right;">{{date}}</p>
+        <p>CATEGORIA: <b><small>{{categoria.nome}}</small></b></p>
+        <p style="text-align: right;">{{data}}</p>
+        <div class="mt-2">
+          <p>{{conteudo}}</p>
+        </div>
       </div>
+
       <div class="card-footer">
-        <a href="/admin/categorias/editar/{{_id}}">
+        <a href="/admin/postagem/editar/{{_id}}">
           <button class="btn btn-primary">Editar</button>
         </a>
-        <a href="/admin/categorias/eliminar/{{_id}}">
+        <a href="/admin/postagem/eliminar/{{_id}}">
           <button class="btn btn-danger">Eliminar</button>
         </a>
       </div>
     </div>
   {{else}}
     <div class="text-center mt-4 text-secondary">
-      <p>Nenhuma categoria registada ainda.</p>
+      <p>Nenhuma postagem registada ainda.</p>
     </div>
-  {{/each}} --}}
+  {{/each}}
 </div>

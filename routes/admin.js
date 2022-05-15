@@ -106,7 +106,17 @@ router.post("/categorias/update", (req, res) => {
 });
 
 router.get("/postagens", (req, res) => {
-  res.render("admin/postagens");
+  Postagem.find()
+    .populate("categoria")
+    .sort({ data: "desc" })
+    .then((postagens) => {
+      const postagens_ = JSON.parse(JSON.stringify(postagens));
+      return res.render("admin/postagens", { postagens: postagens_ });
+    })
+    .catch((err) => {
+      req.flash("error_msg", "Houve um erro ao exibir as postagens!");
+      res.redirect("/admin/postagens");
+    });
 });
 router.get("/postagens/add", (req, res) => {
   Categoria.find()
@@ -118,8 +128,53 @@ router.get("/postagens/add", (req, res) => {
     });
 });
 router.post("/postagens/add", (req, res) => {
-  new Postagem(req.body).save().then(() => {
+  const { categoria } = req.body;
+  if (categoria.length === 1) {
+    console.log("Categria Invalida!");
+    return res.render("admin/addpostagens", {
+      erros: [{ texto: "Categoria invalida!" }],
+    });
+  } else {
+    new Postagem(req.body).save().then(() => {
+      req.flash("success_msg", "Postagem adicionada com sucesso!");
+      res.redirect("/admin/postagens");
+    });
+  }
+});
+router.get("/postagem/editar/:id", (req, res) => {
+  Postagem.findOne({ _id: req.params.id })
+    .populate("categoria")
+    .then((postagem) => {
+      postagem_ = JSON.parse(JSON.stringify(postagem));
+      Categoria.find()
+        .sort({ data: "desc" })
+        .then((categorias) => {
+          categorias_ = JSON.parse(JSON.stringify(categorias));
+          res.render("admin/editpostagens", {
+            ...postagem_,
+            categorias: categorias_,
+          });
+        });
+    });
+});
+router.get("/postagem/eliminar/:id", (req, res) => {
+  Postagem.remove({ _id: req.params.id }).then(() => {
+    req.flash("success_msg", "Postagem eliminada com sucesso!");
     res.redirect("/admin/postagens");
+  });
+});
+router.post("/postagem/editar", (req, res) => {
+  const { _id, titulo, slug, conteudo, categoria, descricao } = req.body;
+  Postagem.findOne({ _id }).then((postagem) => {
+    postagem.titulo = titulo;
+    postagem.slug = slug;
+    postagem.conteudo = conteudo;
+    postagem.categoria = categoria;
+    postagem.descricao = descricao;
+    postagem.save().then(() => {
+      req.flash("success_msg", "Postagem editada com sucesso!");
+      res.redirect("/admin/postagens");
+    });
   });
 });
 module.exports = router;
