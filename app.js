@@ -2,6 +2,7 @@ const express = require("express");
 const handlebars = require("express-handlebars");
 const bodyParser = require("body-parser");
 const admin = require("./routes/admin");
+const home = require("./routes/home");
 const app = express();
 const path = require("path");
 const session = require("express-session");
@@ -43,7 +44,9 @@ app.use((req, res, next) => {
   next();
 });
 app.use("/admin", admin);
+app.use("/", home);
 
 app.listen(PORT, () => {
+  console.clear();
   console.log("Servidor rodando...");
 });

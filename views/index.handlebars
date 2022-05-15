@@ -1,0 +1,44 @@
+<div class="jumbotron">
+  <h1 class="display-4" style="font-size:35px;">Bem vindo ao blog do Node!</h1>
+  <p class="lead">Este é um simples componente jumbotron para chamar mais
+    atenção a um determinado conteúdo ou informação.</p>
+  <hr class="my-4" />
+  <p>Ele usa classes utilitárias para tipografia e espaçamento de conteúdo,
+    dentro do maior container.</p>
+  <a class="btn btn-primary" href="#" role="button">Crie uma conta</a>
+</div>
+
+<hr />
+
+{{#if categoria}}
+  <h3>Postagens da categoria <b>"{{categoria.nome}}"</b></h3>
+{{else}}
+  <h2>Postagens Recentes</h2>
+{{/if}}
+<div class="my-3">
+  {{#each postagens}}
+
+    <div class="card my-3">
+      <div class="card-header">
+        <h4>{{titulo}}</h4>
+      </div>
+      <div class="card-body">
+        <p>{{descricao}}</p>
+        <small class="text-secondary">Categoria:
+          <b>{{categoria.nome}}</b></small><br />
+        <small class="text-secondary">Data de criação: <b>{{data}}</b></small>
+        <div class="my-1 text-right">
+          <a href="/postagem/{{slug}}">
+            <button class="btn btn-info btn-sm">Ler mais</button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  {{else}}
+    <div class="my-4">
+      <p class="text-secondary text-center">Nenhuma postagem encontrada</p>
+    </div>
+  {{/each}}
+
+</div>
