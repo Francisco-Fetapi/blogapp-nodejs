@@ -3,10 +3,14 @@ const handlebars = require("express-handlebars");
 const bodyParser = require("body-parser");
 const admin = require("./routes/admin");
 const home = require("./routes/home");
+const usuarios = require("./routes/usuario");
 const app = express();
 const path = require("path");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+
+require("./config/auth")(passport);
 
 // Configurando as sessoes
 app.use(
@@ -16,6 +20,8 @@ app.use(
     saveUninitialized: true,
   })
 );
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 
 // Middlewares
@@ -23,6 +29,8 @@ app.use(flash());
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error");
+  res.locals.user = req.user || null;
   next();
 });
 
@@ -45,6 +53,7 @@ app.use((req, res, next) => {
 });
 app.use("/admin", admin);
 app.use("/", home);
+app.use("/usuarios", usuarios);
 
 app.listen(PORT, () => {
   console.clear();

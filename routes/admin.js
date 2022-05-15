@@ -2,7 +2,9 @@ const express = require("express");
 const Categoria = require("../model/Categoria");
 const Postagem = require("../model/Postagem");
 const router = express.Router();
+const { ehAdmin } = require("../helpers/ehAdmin");
 
+router.use(ehAdmin);
 router.get("/", (req, res) => {
   res.render("admin/index");
 });
