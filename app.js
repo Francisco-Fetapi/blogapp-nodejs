@@ -47,10 +47,6 @@ app.use(express.static(path.join(__dirname, "public")));
 const PORT = 3000;
 
 // Rotas
-app.use((req, res, next) => {
-  console.log("Eu sou o middlware");
-  next();
-});
 app.use("/admin", admin);
 app.use("/", home);
 app.use("/usuarios", usuarios);
