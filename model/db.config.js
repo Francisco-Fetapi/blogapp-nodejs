@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+const { mongoURI } = require("../config/db.js");
 
 mongoose
-  .connect("mongodb://localhost/blogapp")
+  .connect(mongoURI)
   .then(() => {
     console.log("MongoDB conectado");
   })
