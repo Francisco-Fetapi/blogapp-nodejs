@@ -39,7 +39,7 @@ npm start
 Rode a aplicação no modo de desenvolvimento com o comando `npm start`(executar o comando na raiz do projeto).
 Abra [http://localhost:3000](http://localhost:3000) para visualizar o projeto no navegador.
 
-`NOTA:` Para iniciar o projeto, o servidor do `Mongo` deve estar rodando, para deixar ele rodando, abra o terminar e execute o comando:
+`NOTA:` Para iniciar o projeto, o servidor do `Mongo` deve estar rodando, para deixar ele rodando, abra o terminal e execute o comando:
 ```
 mongod
 ```
